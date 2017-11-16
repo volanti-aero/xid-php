@@ -50,7 +50,7 @@ class Generator
     public function generate()
     {
         $now = time();
-        $id = array_fill(0, Xid::RAW_LEN, []);
+        $id = [];
 
         $id[0] = ($now >> 24) & 0xff;
         $id[0] = ($now >> 24) & 0xff;
@@ -89,6 +89,35 @@ class Generator
     }
 
     /**
+     * Reads an ID from its string representation
+     *
+     * @param string $str
+     * @throws Exception
+     * @return Xid
+     */
+    public static function fromString($str)
+    {
+        if (strlen($str) !== Encoder::ENCODED_LEN) {
+            throw new Exception("invalid id");
+        }
+
+        $dec = Encoder::getDec();
+
+        $src = array_map(function($v) {
+            return ord($v);
+        }, str_split($str));
+
+        foreach ($src as $c) {
+            if ($dec[$c] === 0xff) {
+                throw new Exception("invalid id");
+            }
+        }
+
+        $id = Encoder::decode($src);
+        return new Xid($id);
+    }
+
+    /**
      * Get the machine id. If it fails to get the host name, uses openssl to generate a random name.
      *
      * @return array
@@ -103,6 +132,12 @@ class Generator
         }
     }
 
+    /**
+     * Split input string into ASCII array
+     *
+     * @param string $str
+     * @param array
+     */
     private function ord($str)
     {
         return array_map(function($v) {

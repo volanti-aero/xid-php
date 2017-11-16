@@ -4,6 +4,7 @@ namespace Fpay\Xid\Tests;
 
 use Fpay\Xid\Generator;
 use Fpay\Xid\Xid;
+use Fpay\Xid\Exception;
 use TestCase;
 
 class GeneratorTest extends TestCase
@@ -77,5 +78,34 @@ class GeneratorTest extends TestCase
             $delta = $id->counter() - $prev->counter();
             $this->assertEquals(1, $delta, "Wrong increment in generated ID");
         }
+    }
+
+    public function testFromString()
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $id = Generator::create();
+            $fid = Generator::fromString((string) $id);
+
+            $this->assertEquals((string) $id, (string) $fid, "Wrong decode string");
+            $this->assertEquals($id->value, $fid->value, "Wrong decode value");
+        }
+    }
+
+    public function testFromEmptyString()
+    {
+        $this->expectException(Exception::class);
+        Generator::fromString("");
+    }
+
+    public function testFromLargeString()
+    {
+        $this->expectException(Exception::class);
+        Generator::fromString("b86oelhmcgq29jqjd91gb86oelhmcgq29jqjd91g");
+    }
+
+    public function testFromStringWithInvalidChar()
+    {
+        $this->expectException(Exception::class);
+        Generator::fromString("b86ohmpMcgq29jqjd920");
     }
 }
