@@ -1,6 +1,6 @@
 {
     "name": "fpay/xid-php",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "Globally Unique ID Generator",
     "homepage": "https://github.com/fpay/xid-php",
     "type": "library",
@@ -8,8 +8,7 @@
         "php": ">=7.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.0",
-        "satooshi/php-coveralls": "dev-master"
+        "phpunit/phpunit": "~6.0"
     },
     "autoload": {
         "psr-4": {

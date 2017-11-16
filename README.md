@@ -1,5 +1,12 @@
 # Globally Unique ID Generator
 
+[![Latest Stable Version](https://poser.pugx.org/fpay/xid-php/v/stable)](https://packagist.org/packages/fpay/xid-php)
+[![Total Downloads](https://poser.pugx.org/fpay/xid-php/downloads)](https://packagist.org/packages/fpay/xid-php)
+[![Latest Unstable Version](https://poser.pugx.org/fpay/xid-php/v/unstable)](https://packagist.org/packages/fpay/xid-php)
+[![License](https://poser.pugx.org/fpay/xid-php/license)](https://packagist.org/packages/fpay/xid-php)
+[![Build Status](https://travis-ci.org/fpay/xid-php.svg?branch=master)](https://travis-ci.org/fpay/xid-php)
+[![codecov](https://codecov.io/gh/fpay/xid-php/branch/master/graph/badge.svg)](https://codecov.io/gh/fpay/xid-php)
+
 > This project is a PHP implementation of the Go Lang library found here: [https://github.com/rs/xid](https://github.com/rs/xid)
 
 Package xid is a globally unique id generator library, ready to be used safely directly in your server code.
@@ -68,6 +75,10 @@ Requirements:
 1. PHP >= 7.0.0
 2. POSIX enabled
 3. APCu extension (optional, to share counter across requests)
+
+```sh
+composer require fpay/xid-php
+```
 
 ## Usage
 
