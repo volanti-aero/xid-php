@@ -128,7 +128,7 @@ class Generator
         if ($name === false) {
             return $this->ord(random_bytes(3));
         } else {
-            return $this->ord(substr(hash("md5", $name), 0, 3));
+            return $this->ord(substr(md5($name, true), 0, 3));
         }
     }
 

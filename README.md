@@ -11,7 +11,7 @@
 
 Package xid is a globally unique id generator library, ready to be used safely directly in your server code.
 
-Xid is using Mongo Object ID algorithm to generate globally unique ids with a different serialization (bast64) to make it shorter when transported as a string:
+Xid is using Mongo Object ID algorithm to generate globally unique ids with a different serialization (base64) to make it shorter when transported as a string:
 https://docs.mongodb.org/manual/reference/object-id/
 
 - 4-byte value representing the seconds since the Unix epoch,
@@ -83,7 +83,7 @@ composer require fpay/xid-php
 ## Usage
 
 ```php
-$guid = Fpay\Xid\Generator::create();
+$guid = \Fpay\Xid\Generator::create();
 
 echo $guid . PHP_EOL;
 // Output: 9m4e2mr0ui3e8a215n4g
@@ -96,6 +96,12 @@ $guid->machine();
 $guid->pid();
 $guid->time();
 $guid->counter();
+```
+
+Decode from string:
+
+```php
+$guid = \Fpay\Xid\Generator::fromString("9m4e2mr0ui3e8a215n4g");
 ```
 
 ## Licenses
