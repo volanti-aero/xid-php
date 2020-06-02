@@ -33,10 +33,6 @@ class Generator
             $options["cli"] = php_sapi_name() == 'cli';
         }
 
-        if (!array_key_exists("apcu", $options)) {
-            $options["apcu"] = function_exists('apcu_inc');
-        }
-
         $this->machineId = $this->getMachineId();
         $this->pid = posix_getpid();
         $this->objectIdCounter = $this->objectIdGenerator($this->pid, $options);
@@ -159,11 +155,6 @@ class Generator
             return $this->loopCounter();
         }
 
-        // share counter across requests in the same php-fpm process
-        if ($options["apcu"]) {
-            return $this->apcuCounter($pid);
-        }
-
         // if there is no apcu extension, fallback to simple looping
         return $this->loopCounter();
     }
@@ -176,24 +167,6 @@ class Generator
     private function loopCounter() {
         for ($i = mt_rand(); ; $i++) {
             yield $i;
-        }
-    }
-
-    /**
-     * Create a counter generator which uses apcu to share counter across requests.
-     *
-     * @return \Generator
-     */
-    private function apcuCounter($pid) {
-        $key = "xid.counter:{$pid}";
-        if (!apcu_exists($key)) {
-            apcu_store($key, mt_rand());
-        }
-
-        while (true) {
-            $i = apcu_fetch($key);
-            yield $i;
-            apcu_inc($key, 1);
         }
     }
 }
